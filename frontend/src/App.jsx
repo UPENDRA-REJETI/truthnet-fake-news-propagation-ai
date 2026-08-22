@@ -83,8 +83,7 @@ function App() {
   const [interventionCascade, setInterventionCascade] = useState(281);
   const [interventionSummary, setInterventionSummary] = useState(null);
   const [interventionCausal, setInterventionCausal] = useState(null);
-  const [interventionCascadeData, setInterventionCascadeData] =
-    useState(null);
+
   const [interventionLoading, setInterventionLoading] = useState(false);
   const [interventionError, setInterventionError] = useState("");
 
@@ -308,7 +307,6 @@ function App() {
 
     setInterventionSummary(null);
     setInterventionCausal(null);
-    setInterventionCascadeData(null);
 
     try {
       const cascadeId = Number(interventionCascade);
@@ -316,22 +314,16 @@ function App() {
       const [
         summaryResponse,
         causalResponse,
-        cascadeResponse,
       ] = await Promise.all([
         fetch(`${API_URL}/api/intervention/summary`),
 
         fetch(
           `${API_URL}/api/intervention/causal?cascade_id=${cascadeId}`
         ),
-
-        fetch(
-          `${API_URL}/api/intervention/cascade?cascade_id=${cascadeId}`
-        ),
       ]);
 
       const summaryData = await summaryResponse.json();
       const causalData = await causalResponse.json();
-      const cascadeData = await cascadeResponse.json();
 
       if (!summaryResponse.ok) {
         throw new Error(
@@ -347,16 +339,8 @@ function App() {
         );
       }
 
-      if (!cascadeResponse.ok) {
-        throw new Error(
-          cascadeData.error ||
-            "Unable to load cascade intervention data."
-        );
-      }
-
       setInterventionSummary(summaryData.data);
       setInterventionCausal(causalData.data);
-      setInterventionCascadeData(cascadeData.data);
     } catch (err) {
       setInterventionError(
         err.message ||
@@ -588,50 +572,6 @@ function App() {
     influenceUsers.length > 0
       ? influenceUsers[0]
       : null;
-
-  // ============================================================
-  // INTERACTIVE INFLUENCE GRAPH
-  // ============================================================
-
-  const influenceGraphData = useMemo(() => {
-    if (!influenceUsers.length) {
-      return {
-        nodes: [],
-        links: [],
-      };
-    }
-
-    const nodes = influenceUsers.map((user) => ({
-      id: String(user.user_id),
-      user_id: user.user_id,
-      role: user.network_role,
-      priority: user.intervention_priority,
-      influence: Number(user.influence_score || 0),
-      posts: Number(user.propagation_posts || 0),
-    }));
-
-    const links = [];
-
-    // The current influence API returns ranked nodes rather than
-    // raw user-to-user edges. Therefore this is a visual influence
-    // topology centered on the highest-ranked displayed node.
-    if (nodes.length > 1) {
-      const root = nodes[0];
-
-      nodes.slice(1).forEach((node) => {
-        links.push({
-          source: root.id,
-          target: node.id,
-          value: node.influence,
-        });
-      });
-    }
-
-    return {
-      nodes,
-      links,
-    };
-  }, [influenceUsers]);
 
   // ============================================================
   // REAL PROPAGATION GRAPH DATA
