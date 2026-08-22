@@ -1,0 +1,76 @@
+{
+    "dataset": "FibVID",
+    "sample_count": 295,
+    "target": "log_final_cascade_size",
+    "target_transformation": "log1p(final_cascade_size)",
+    "model": "RandomForestRegressor",
+    "random_state": 42,
+    "windows": {
+        "1": {
+            "model_file": "models\\propagation\\propagation_rf_1h.joblib",
+            "features": [
+                "early_tweets_1h",
+                "early_users_1h",
+                "early_max_depth_1h",
+                "early_likes_1h",
+                "early_retweets_1h",
+                "engagement_1h"
+            ],
+            "n_estimators": 300,
+            "max_depth": 8,
+            "min_samples_leaf": 3,
+            "feature_importance": {
+                "early_max_depth_1h": 0.4998738928662598,
+                "early_retweets_1h": 0.21757123655070942,
+                "early_likes_1h": 0.1369206410900437,
+                "engagement_1h": 0.08718973593066814,
+                "early_users_1h": 0.03022288268882686,
+                "early_tweets_1h": 0.028221610873492037
+            }
+        },
+        "6": {
+            "model_file": "models\\propagation\\propagation_rf_6h.joblib",
+            "features": [
+                "early_tweets_6h",
+                "early_users_6h",
+                "early_max_depth_6h",
+                "early_likes_6h",
+                "early_retweets_6h",
+                "engagement_6h"
+            ],
+            "n_estimators": 300,
+            "max_depth": 8,
+            "min_samples_leaf": 3,
+            "feature_importance": {
+                "early_max_depth_6h": 0.5183501590490838,
+                "early_retweets_6h": 0.19298976160114484,
+                "early_likes_6h": 0.1272389553659966,
+                "engagement_6h": 0.07334388944661067,
+                "early_users_6h": 0.04444597571237934,
+                "early_tweets_6h": 0.04363125882478475
+            }
+        },
+        "24": {
+            "model_file": "models\\propagation\\propagation_rf_24h.joblib",
+            "features": [
+                "early_tweets_24h",
+                "early_users_24h",
+                "early_max_depth_24h",
+                "early_likes_24h",
+                "early_retweets_24h",
+                "engagement_24h"
+            ],
+            "n_estimators": 300,
+            "max_depth": 8,
+            "min_samples_leaf": 3,
+            "feature_importance": {
+                "early_max_depth_24h": 0.5367888180936814,
+                "early_retweets_24h": 0.16959888727470365,
+                "early_likes_24h": 0.09345850272934209,
+                "early_tweets_24h": 0.06931058546530028,
+                "engagement_24h": 0.06695368846199701,
+                "early_users_24h": 0.06388951797497573
+            }
+        }
+    }
+}

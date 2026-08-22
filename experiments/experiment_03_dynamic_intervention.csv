@@ -1,0 +1,11 @@
+strategy,timing,targets,final_reach,remaining_edges,max_depth,reach_reduction_percent
+none,none,0,13493,15070,5,0.0
+fact_checking,early,0,10990,12081,5,18.550359445638477
+content_moderation,early,0,9390,10199,5,30.4083598903135
+targeted_intervention,early,10,12358,13703,5,8.411769065441339
+fact_checking,mid,0,11933,13214,5,11.561550433558141
+content_moderation,mid,0,10923,12036,5,19.046913214259245
+targeted_intervention,mid,10,12697,14104,5,5.899355221225821
+fact_checking,late,0,12847,14308,5,4.787667679537537
+content_moderation,late,0,12466,13844,5,7.6113540354257765
+targeted_intervention,late,10,13380,14928,5,0.837471281405173
